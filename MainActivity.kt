@@ -17,6 +17,11 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.currentCompositionLocalContext
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -31,50 +36,37 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PracticeTheme {
-                MyBtn()
 
+                SimpleCounterBtn()
             }
         }
     }
 }
 
+
 @Composable
-fun MyBtn(){
-
-    val context = LocalContext.current
-
-    Button(onClick = {
-        Log.d("Main" , "OnCLick")
-        Toast.makeText(context, "클릭 완료" , Toast.LENGTH_LONG).show()
-    },
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Yellow,
-            contentColor = Color.Black
-
-
-        ), modifier = Modifier
-            .width(200.dp)
-            .height(100.dp)
-
-        ) 
+fun SimpleCounterBtn(){
+    var count by remember{mutableStateOf(0)}
     
-        {
-            Text(
-                text = "I love you you love me I love you you love me",
-                lineHeight = 30.sp,
-                fontSize = 30.sp,
-                color = Color.Black
+    Button(onClick = {
+        count ++
+    },
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text(
+            text = "Count : $count",
+            fontSize = 50.sp
 
-            )
+        )
 
+    }
 
-        }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     PracticeTheme {
-        MyBtn()
+
     }
 }
